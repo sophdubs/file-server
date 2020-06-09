@@ -7,7 +7,7 @@ server.on('connection', (client) => {
   client.on('data', data => {
     fs.readFile(data.toString(), 'utf8', (err, file) => {
       if (err) {
-        console.log(err);
+        client.write('ERROR');
       } else {
         client.write(file);
       }

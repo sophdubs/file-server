@@ -15,10 +15,17 @@ conn.on('connect', () => {
 });
 
 conn.on('data', data => {
+  if (data === 'ERROR') {
+    console.log('An error occured while reading the file');
+    conn.end();
+    return;
+  }
   fs.writeFile(`./write/${fileName}`, data, (err) => {
     if (err) {
       console.log('An error occured while writing the file');
+      conn.end();
     } else {
+      console.log(`Successfully copied the file to './write/${fileName}'`);
       conn.end();
     }
   })
